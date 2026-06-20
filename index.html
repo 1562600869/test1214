@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华容道 - 经典益智游戏</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>华 容 道</h1>
+        <p class="subtitle">帮曹操从底部出口逃脱</p>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-label">关卡</span>
+                <span class="status-value level-name" id="levelName">第 1 关</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">步数</span>
+                <span class="status-value" id="steps">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">最少步数</span>
+                <span class="status-value" id="bestSteps">—</span>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="480" height="520"></canvas>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-undo" id="undoBtn">撤销</button>
+            <button class="btn btn-reset" id="resetBtn">重置</button>
+            <button class="btn btn-next" id="nextBtn">下一关</button>
+        </div>
+
+        <p class="hint">点击棋子选中，再点击相邻空格移动 · 最多撤销10步</p>
+    </div>
+
+    <div class="modal" id="winModal">
+        <div class="modal-content">
+            <h2 class="modal-title">恭喜通关！</h2>
+            <p class="modal-text">本次步数</p>
+            <p class="modal-steps" id="winSteps">0</p>
+            <p class="new-record" id="newRecord">🎉 新纪录！</p>
+            <div class="modal-buttons">
+                <button class="btn btn-reset" id="winReplayBtn">重玩本关</button>
+                <button class="btn btn-next" id="winNextBtn">下一关</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/levels.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
