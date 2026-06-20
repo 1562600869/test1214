@@ -63,6 +63,13 @@ class Board {
     canMove(piece, direction) {
         if (!piece) return false;
 
+        if (piece.type === PIECE_TYPES.HENG) {
+            if (direction !== 'left' && direction !== 'right') return false;
+        }
+        if (piece.type === PIECE_TYPES.SHU) {
+            if (direction !== 'up' && direction !== 'down') return false;
+        }
+
         let newX = piece.x;
         let newY = piece.y;
 

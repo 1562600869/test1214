@@ -104,7 +104,7 @@ class Game {
 
     saveHistory() {
         const state = {
-            pieces: this.board.pieces.map(p => ({ ...p })),
+            pieces: JSON.parse(JSON.stringify(this.board.pieces)),
             steps: this.steps
         };
         this.history.push(state);
