@@ -26,6 +26,7 @@ class Game {
         this.newRecordEl = document.getElementById('newRecord');
         this.undoBtn = document.getElementById('undoBtn');
         this.nextBtn = document.getElementById('nextBtn');
+        this.winNextBtn = document.getElementById('winNextBtn');
 
         this.bindEvents();
         this.loadLevel(0);
@@ -148,6 +149,9 @@ class Game {
     }
 
     showWinModal() {
+        const isLastLevel = this.currentLevel === LEVELS.length - 1;
+        this.winNextBtn.disabled = isLastLevel;
+        this.winNextBtn.textContent = isLastLevel ? '已通关' : '下一关';
         this.winModal.style.display = 'flex';
     }
 
