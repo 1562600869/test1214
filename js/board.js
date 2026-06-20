@@ -45,13 +45,19 @@ class Board {
         return this.pieces.find(p => p.id === pieceId);
     }
 
-    getPieceByClientXy(clientX, clientY, canvas, cellSize, boardOffsetX, boardOffsetY) {
+    getGridPosition(clientX, clientY, canvas, cellSize, boardOffsetX, boardOffsetY) {
         const rect = canvas.getBoundingClientRect();
         const x = clientX - rect.left - boardOffsetX;
         const y = clientY - rect.top - boardOffsetY;
-        const gridX = Math.floor(x / cellSize);
-        const gridY = Math.floor(y / cellSize);
-        return this.getPieceAt(gridX, gridY);
+        return {
+            gridX: Math.floor(x / cellSize),
+            gridY: Math.floor(y / cellSize)
+        };
+    }
+
+    getPieceByClientXy(clientX, clientY, canvas, cellSize, boardOffsetX, boardOffsetY) {
+        const pos = this.getGridPosition(clientX, clientY, canvas, cellSize, boardOffsetX, boardOffsetY);
+        return this.getPieceAt(pos.gridX, pos.gridY);
     }
 
     canMove(piece, direction) {

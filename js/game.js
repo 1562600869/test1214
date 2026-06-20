@@ -24,6 +24,8 @@ class Game {
         this.winModal = document.getElementById('winModal');
         this.winStepsEl = document.getElementById('winSteps');
         this.newRecordEl = document.getElementById('newRecord');
+        this.undoBtn = document.getElementById('undoBtn');
+        this.nextBtn = document.getElementById('nextBtn');
 
         this.bindEvents();
         this.loadLevel(0);
@@ -62,11 +64,12 @@ class Game {
     handleClick(e) {
         if (this.isWin) return;
 
-        const rect = this.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left - this.renderer.boardOffsetX;
-        const y = e.clientY - rect.top - this.renderer.boardOffsetY;
-        const gridX = Math.floor(x / CELL_SIZE);
-        const gridY = Math.floor(y / CELL_SIZE);
+        const pos = this.board.getGridPosition(
+            e.clientX, e.clientY, this.canvas, CELL_SIZE,
+            this.renderer.boardOffsetX, this.renderer.boardOffsetY
+        );
+        const gridX = pos.gridX;
+        const gridY = pos.gridY;
 
         if (gridX < 0 || gridX >= BOARD_COLS || gridY < 0 || gridY >= BOARD_ROWS) {
             this.selectedPieceId = null;
@@ -126,7 +129,8 @@ class Game {
     }
 
     nextLevel() {
-        const nextIndex = (this.currentLevel + 1) % LEVELS.length;
+        if (this.currentLevel >= LEVELS.length - 1) return;
+        const nextIndex = this.currentLevel + 1;
         this.loadLevel(nextIndex);
     }
 
@@ -157,6 +161,14 @@ class Game {
 
         const best = Storage.getBestSteps(this.currentLevel);
         this.bestStepsEl.textContent = best !== null ? best : '—';
+
+        this.undoBtn.disabled = this.history.length === 0 || this.isWin;
+        this.nextBtn.disabled = this.currentLevel === LEVELS.length - 1;
+        if (this.currentLevel === LEVELS.length - 1) {
+            this.nextBtn.textContent = '已通关';
+        } else {
+            this.nextBtn.textContent = '下一关';
+        }
     }
 
     render() {
